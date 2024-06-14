@@ -11,6 +11,11 @@ It is based on the code for the [Build a Shopify app using Remix tutorial](https
 1. You must [download and install Node.js](https://nodejs.org/en/download/) if you don't already have it.
 1. You must [create a Shopify partner account](https://partners.shopify.com/signup) if you don’t have one.
 1. You must create a store for testing if you don't have one, either a [development store](https://help.shopify.com/en/partners/dashboard/development-stores#create-a-development-store) or a [Shopify Plus sandbox store](https://help.shopify.com/en/partners/dashboard/managing-stores/plus-sandbox-store).
+1. You must run a MySQL server instance using:
+
+```shell
+docker run --name mysql-local -e MYSQL_ROOT_PASSWORD=xxx -e MYSQL_DATABASE=xxx -p 3306:3306 -d mysql:latest
+```
 
 ### Setup
 
