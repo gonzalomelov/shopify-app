@@ -1,6 +1,9 @@
-import qrcode from "qrcode";
 import invariant from "tiny-invariant";
 import db from "../db.server";
+/**
+ * @typedef {import('../services/textToDataUrl').TextToDataURLOptions} TextToDataURLOptions
+ */
+import { textToDataURL } from '../services/textToDataUrl';
 
 // [START get-frame]
 export async function getFrame(id, graphql) {
@@ -30,7 +33,17 @@ export async function getFrames(shop, graphql) {
 // [START get-frame-image]
 export function getFrameImage(id) {
   const url = new URL(`/frames/${id}/scan`, process.env.SHOPIFY_APP_URL);
-  return qrcode.toDataURL(url.href);
+
+  /** @type {TextToDataURLOptions} */
+  const opts = {
+    width: 300,
+    height: 300,
+    backgroundColor: '#FFBF60FF',
+    textColor: '#010599FF',
+    fontSize: 40,
+  };
+
+  return textToDataURL(url.href, opts);
 }
 // [END get-frame-image]
 
