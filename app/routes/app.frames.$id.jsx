@@ -60,7 +60,7 @@ export async function action({ request, params }) {
 
   if (data.action === "delete") {
     await db.frame.delete({ where: { id: Number(params.id) } });
-    return redirect("/app");
+    return redirect("/app/frames/home");
   }
 
   const errors = validateFrame(data);
@@ -140,7 +140,7 @@ export default function FrameForm() {
     <Page>
       {/* [START breadcrumbs] */}
       <ui-title-bar title={frame.id ? "Edit Frame" : "Create new Frame"}>
-        <button variant="breadcrumb" onClick={() => navigate("/app")}>
+        <button variant="breadcrumb" onClick={() => navigate("/app/frames/home")}>
           Frames
         </button>
       </ui-title-bar>

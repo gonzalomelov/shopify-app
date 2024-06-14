@@ -1,138 +1,86 @@
-import { json } from "@remix-run/node";
-import { useLoaderData, Link, useNavigate } from "@remix-run/react";
-import { authenticate } from "../shopify.server";
 import {
+  Box,
   Card,
-  EmptyState,
   Layout,
+  Link,
+  List,
   Page,
-  IndexTable,
-  Thumbnail,
   Text,
-  Icon,
-  InlineStack,
+  BlockStack,
 } from "@shopify/polaris";
+import { TitleBar } from "@shopify/app-bridge-react";
 
-import { getFrames } from "../models/Frame.server";
-import { AlertDiamondIcon, ImageIcon } from "@shopify/polaris-icons";
-
-// [START loader]
-export async function loader({ request }) {
-  const { admin, session } = await authenticate.admin(request);
-  const frames = await getFrames(session.shop, admin.graphql);
-
-  return json({
-    frames,
-  });
-}
-// [END loader]
-
-// [START empty]
-const EmptyFrameState = ({ onAction }) => (
-  <EmptyState
-    heading="Create unique Frames for your product"
-    action={{
-      content: "Create Frame",
-      onAction,
-    }}
-    image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
-  >
-    <p>Allow customers to scan codes and buy products using their phones.</p>
-  </EmptyState>
-);
-// [END empty]
-
-function truncate(str, { length = 25 } = {}) {
-  if (!str) return "";
-  if (str.length <= length) return str;
-  return str.slice(0, length) + "…";
-}
-
-// [START table]
-const FrameTable = ({ frames }) => (
-  <IndexTable
-    resourceName={{
-      singular: "Frame",
-      plural: "Frames",
-    }}
-    itemCount={frames.length}
-    headings={[
-      { title: "Thumbnail", hidden: true },
-      { title: "Title" },
-      { title: "Product" },
-      { title: "Date created" },
-      { title: "Scans" },
-    ]}
-    selectable={false}
-  >
-    {frames.map((frame) => (
-      <FrameTableRow key={frame.id} frame={frame} />
-    ))}
-  </IndexTable>
-);
-// [END table]
-
-// [START row]
-const FrameTableRow = ({ frame }) => (
-  <IndexTable.Row id={frame.id} position={frame.id}>
-    <IndexTable.Cell>
-      <Thumbnail
-        source={frame.productImage || ImageIcon}
-        alt={frame.productTitle}
-        size="small"
-      />
-    </IndexTable.Cell>
-    <IndexTable.Cell>
-      <Link to={`frames/${frame.id}`}>{truncate(frame.title)}</Link>
-    </IndexTable.Cell>
-    <IndexTable.Cell>
-      {/* [START deleted] */}
-      {frame.productDeleted ? (
-        <InlineStack align="start" gap="200">
-          <span style={{ width: "20px" }}>
-            <Icon source={AlertDiamondIcon} tone="critical" />
-          </span>
-          <Text tone="critical" as="span">
-            product has been deleted
-          </Text>
-        </InlineStack>
-      ) : (
-        truncate(frame.productTitle)
-      )}
-      {/* [END deleted] */}
-    </IndexTable.Cell>
-    <IndexTable.Cell>
-      {new Date(frame.createdAt).toDateString()}
-    </IndexTable.Cell>
-    <IndexTable.Cell>{frame.scans}</IndexTable.Cell>
-  </IndexTable.Row>
-);
-// [END row]
-
-export default function Index() {
-  const { frames } = useLoaderData();
-  const navigate = useNavigate();
-
-  // [START page]
+export default function SetupPage() {
   return (
     <Page>
-      <ui-title-bar title="Frames">
-        <button variant="primary" onClick={() => navigate("/app/frames/new")}>
-          Create Frame
-        </button>
-      </ui-title-bar>
+      <TitleBar title="Setup page" />
       <Layout>
         <Layout.Section>
-          <Card padding="0">
-            {frames.length === 0 ? (
-              <EmptyFrameState onAction={() => navigate("frames/new")} />
-            ) : (
-              <FrameTable frames={frames} />
-            )}
+          <Card>
+            <BlockStack gap="300">
+              <Text as="p" variant="bodyMd">
+                The app template comes with a setup page which
+                demonstrates how to create multiple pages within app navigation
+                using{" "}
+                <Link
+                  url="https://shopify.dev/docs/apps/tools/app-bridge"
+                  target="_blank"
+                  removeUnderline
+                >
+                  App Bridge
+                </Link>
+                .
+              </Text>
+              <Text as="p" variant="bodyMd">
+                To create your own page and have it show up in the app
+                navigation, add a page inside <Code>app/routes</Code>, and a
+                link to it in the <Code>&lt;NavMenu&gt;</Code> component found
+                in <Code>app/routes/app.jsx</Code>.
+              </Text>
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        <Layout.Section variant="oneThird">
+          <Card>
+            <BlockStack gap="200">
+              <Text as="h2" variant="headingMd">
+                Resources
+              </Text>
+              <List>
+                <List.Item>
+                  <Link
+                    url="https://shopify.dev/docs/apps/design-guidelines/navigation#app-nav"
+                    target="_blank"
+                    removeUnderline
+                  >
+                    App nav best practices
+                  </Link>
+                </List.Item>
+              </List>
+            </BlockStack>
           </Card>
         </Layout.Section>
       </Layout>
     </Page>
   );
-  // [END page]
+}
+
+/**
+ * @param {{ children: React.ReactNode }} props
+ */
+function Code({ children }) {
+  return (
+    <Box
+      as="span"
+      padding="025"
+      paddingInlineStart="100"
+      paddingInlineEnd="100"
+      background="bg-surface-active"
+      borderWidth="025"
+      borderColor="border"
+      borderRadius="100"
+    >
+      <code>{children}</code>
+    </Box>
+  );
 }
