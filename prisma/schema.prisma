@@ -21,8 +21,8 @@ model Session {
   userId      BigInt?
 }
 
-// [START qrcode-model]
-model QRCode {
+// [START frame-model]
+model Frame {
   id               Int      @id @default(autoincrement())
   title            String
   shop             String
@@ -34,4 +34,4 @@ model QRCode {
   createdAt        DateTime @default(now())
 }
 
-// [END qrcode-model]
+// [END frame-model]

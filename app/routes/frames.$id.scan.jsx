@@ -2,26 +2,26 @@ import { redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import db from "../db.server";
 
-import { getDestinationUrl } from "../models/QRCode.server";
+import { getDestinationUrl } from "../models/Frame.server";
 
 export const loader = async ({ params }) => {
   // [START validate]
-  invariant(params.id, "Could not find QR code destination");
+  invariant(params.id, "Could not find Frame destination");
 
   const id = Number(params.id);
-  const qrCode = await db.qRCode.findFirst({ where: { id } });
+  const frame = await db.frame.findFirst({ where: { id } });
 
-  invariant(qrCode, "Could not find QR code destination");
+  invariant(frame, "Could not find Frame destination");
   // [END validate]
 
   // [START increment]
-  await db.qRCode.update({
+  await db.frame.update({
     where: { id },
     data: { scans: { increment: 1 } },
   });
   // [END increment]
 
   // [START redirect]
-  return redirect(getDestinationUrl(qrCode));
+  return redirect(getDestinationUrl(frame));
   // [END redirect]
 };

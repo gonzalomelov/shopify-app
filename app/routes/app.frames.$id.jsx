@@ -28,7 +28,7 @@ import {
 import { ImageIcon } from "@shopify/polaris-icons";
 
 import db from "../db.server";
-import { getQRCode, validateQRCode } from "../models/QRCode.server";
+import { getFrame, validateFrame } from "../models/Frame.server";
 
 export async function loader({ request, params }) {
   // [START authenticate]
@@ -43,7 +43,7 @@ export async function loader({ request, params }) {
     });
   }
 
-  return json(await getQRCode(Number(params.id), admin.graphql));
+  return json(await getFrame(Number(params.id), admin.graphql));
   // [END data]
 }
 
@@ -59,32 +59,32 @@ export async function action({ request, params }) {
   };
 
   if (data.action === "delete") {
-    await db.qRCode.delete({ where: { id: Number(params.id) } });
+    await db.frame.delete({ where: { id: Number(params.id) } });
     return redirect("/app");
   }
 
-  const errors = validateQRCode(data);
+  const errors = validateFrame(data);
 
   if (errors) {
     return json({ errors }, { status: 422 });
   }
 
-  const qrCode =
+  const frame =
     params.id === "new"
-      ? await db.qRCode.create({ data })
-      : await db.qRCode.update({ where: { id: Number(params.id) }, data });
+      ? await db.frame.create({ data })
+      : await db.frame.update({ where: { id: Number(params.id) }, data });
 
-  return redirect(`/app/qrcodes/${qrCode.id}`);
+  return redirect(`/app/frames/${frame.id}`);
 }
 // [END action]
 
 // [START state]
-export default function QRCodeForm() {
+export default function FrameForm() {
   const errors = useActionData()?.errors || {};
 
-  const qrCode = useLoaderData();
-  const [formState, setFormState] = useState(qrCode);
-  const [cleanFormState, setCleanFormState] = useState(qrCode);
+  const frame = useLoaderData();
+  const [formState, setFormState] = useState(frame);
+  const [cleanFormState, setCleanFormState] = useState(frame);
   const isDirty = JSON.stringify(formState) !== JSON.stringify(cleanFormState);
 
   const nav = useNavigation();
@@ -139,9 +139,9 @@ export default function QRCodeForm() {
   return (
     <Page>
       {/* [START breadcrumbs] */}
-      <ui-title-bar title={qrCode.id ? "Edit QR code" : "Create new QR code"}>
+      <ui-title-bar title={frame.id ? "Edit Frame" : "Create new Frame"}>
         <button variant="breadcrumb" onClick={() => navigate("/app")}>
-          QR codes
+          Frames
         </button>
       </ui-title-bar>
       {/* [END breadcrumbs] */}
@@ -227,10 +227,10 @@ export default function QRCodeForm() {
                     }
                     error={errors.destination}
                   />
-                  {qrCode.destinationUrl ? (
+                  {frame.destinationUrl ? (
                     <Button
                       variant="plain"
-                      url={qrCode.destinationUrl}
+                      url={frame.destinationUrl}
                       target="_blank"
                     >
                       Go to destination URL
@@ -246,27 +246,27 @@ export default function QRCodeForm() {
           {/* [START preview] */}
           <Card>
             <Text as={"h2"} variant="headingLg">
-              QR code
+              Frame
             </Text>
-            {qrCode ? (
-              <EmptyState image={qrCode.image} imageContained={true} />
+            {frame ? (
+              <EmptyState image={frame.image} imageContained={true} />
             ) : (
               <EmptyState image="">
-                Your QR code will appear here after you save
+                Your Frame will appear here after you save
               </EmptyState>
             )}
             <BlockStack gap="300">
               <Button
-                disabled={!qrCode?.image}
-                url={qrCode?.image}
+                disabled={!frame?.image}
+                url={frame?.image}
                 download
                 variant="primary"
               >
                 Download
               </Button>
               <Button
-                disabled={!qrCode.id}
-                url={`/qrcodes/${qrCode.id}`}
+                disabled={!frame.id}
+                url={`/frames/${frame.id}`}
                 target="_blank"
               >
                 Go to public URL
@@ -282,7 +282,7 @@ export default function QRCodeForm() {
               {
                 content: "Delete",
                 loading: isDeleting,
-                disabled: !qrCode.id || !qrCode || isSaving || isDeleting,
+                disabled: !frame.id || !frame || isSaving || isDeleting,
                 destructive: true,
                 outline: true,
                 onAction: () =>

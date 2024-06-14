@@ -1,8 +1,8 @@
-# Build a Shopify app using Remix
+# Shopify app using Remix
 
-This is a Shopify app for managing QR codes. It is the code for the [Build a Shopify app using Remix tutorial](https://shopify.dev/docs/apps/getting-started/build-qr-code-app).
+This is a Shopify app for managing Frames.
 
-You can [follow the tutorial](https://shopify.dev/docs/apps/getting-started/build-qr-code-app), or just browse the code.
+It is based on the code for the [Build a Shopify app using Remix tutorial](https://shopify.dev/docs/apps/getting-started/build-qr-code-app). You can [follow the tutorial](https://shopify.dev/docs/apps/getting-started/build-qr-code-app), or just browse the code.
 
 ## Quick start
 

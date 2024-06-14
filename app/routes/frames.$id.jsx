@@ -3,32 +3,32 @@ import invariant from "tiny-invariant";
 import { useLoaderData } from "@remix-run/react";
 
 import db from "../db.server";
-import { getQRCodeImage } from "../models/QRCode.server";
+import { getFrameImage } from "../models/Frame.server";
 
 // [START loader]
 export const loader = async ({ params }) => {
-  invariant(params.id, "Could not find QR code destination");
+  invariant(params.id, "Could not find Frame destination");
 
   const id = Number(params.id);
-  const qrCode = await db.qRCode.findFirst({ where: { id } });
+  const frame = await db.frame.findFirst({ where: { id } });
 
-  invariant(qrCode, "Could not find QR code destination");
+  invariant(frame, "Could not find Frame destination");
 
   return json({
-    title: qrCode.title,
-    image: await getQRCodeImage(id),
+    title: frame.title,
+    image: await getFrameImage(id),
   });
 };
 // [END loader]
 
 // [START component]
-export default function QRCode() {
+export default function Frame() {
   const { image, title } = useLoaderData();
 
   return (
     <>
       <h1>{title}</h1>
-      <img src={image} alt={`QR Code for product`} />
+      <img src={image} alt={`Frame for product`} />
     </>
   );
 }

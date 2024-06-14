@@ -13,26 +13,26 @@ import {
   InlineStack,
 } from "@shopify/polaris";
 
-import { getQRCodes } from "../models/QRCode.server";
+import { getFrames } from "../models/Frame.server";
 import { AlertDiamondIcon, ImageIcon } from "@shopify/polaris-icons";
 
 // [START loader]
 export async function loader({ request }) {
   const { admin, session } = await authenticate.admin(request);
-  const qrCodes = await getQRCodes(session.shop, admin.graphql);
+  const frames = await getFrames(session.shop, admin.graphql);
 
   return json({
-    qrCodes,
+    frames,
   });
 }
 // [END loader]
 
 // [START empty]
-const EmptyQRCodeState = ({ onAction }) => (
+const EmptyFrameState = ({ onAction }) => (
   <EmptyState
-    heading="Create unique QR codes for your product"
+    heading="Create unique Frames for your product"
     action={{
-      content: "Create QR code",
+      content: "Create Frame",
       onAction,
     }}
     image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
@@ -49,13 +49,13 @@ function truncate(str, { length = 25 } = {}) {
 }
 
 // [START table]
-const QRTable = ({ qrCodes }) => (
+const FrameTable = ({ frames }) => (
   <IndexTable
     resourceName={{
-      singular: "QR code",
-      plural: "QR codes",
+      singular: "Frame",
+      plural: "Frames",
     }}
-    itemCount={qrCodes.length}
+    itemCount={frames.length}
     headings={[
       { title: "Thumbnail", hidden: true },
       { title: "Title" },
@@ -65,29 +65,29 @@ const QRTable = ({ qrCodes }) => (
     ]}
     selectable={false}
   >
-    {qrCodes.map((qrCode) => (
-      <QRTableRow key={qrCode.id} qrCode={qrCode} />
+    {frames.map((frame) => (
+      <FrameTableRow key={frame.id} frame={frame} />
     ))}
   </IndexTable>
 );
 // [END table]
 
 // [START row]
-const QRTableRow = ({ qrCode }) => (
-  <IndexTable.Row id={qrCode.id} position={qrCode.id}>
+const FrameTableRow = ({ frame }) => (
+  <IndexTable.Row id={frame.id} position={frame.id}>
     <IndexTable.Cell>
       <Thumbnail
-        source={qrCode.productImage || ImageIcon}
-        alt={qrCode.productTitle}
+        source={frame.productImage || ImageIcon}
+        alt={frame.productTitle}
         size="small"
       />
     </IndexTable.Cell>
     <IndexTable.Cell>
-      <Link to={`qrcodes/${qrCode.id}`}>{truncate(qrCode.title)}</Link>
+      <Link to={`frames/${frame.id}`}>{truncate(frame.title)}</Link>
     </IndexTable.Cell>
     <IndexTable.Cell>
       {/* [START deleted] */}
-      {qrCode.productDeleted ? (
+      {frame.productDeleted ? (
         <InlineStack align="start" gap="200">
           <span style={{ width: "20px" }}>
             <Icon source={AlertDiamondIcon} tone="critical" />
@@ -97,37 +97,37 @@ const QRTableRow = ({ qrCode }) => (
           </Text>
         </InlineStack>
       ) : (
-        truncate(qrCode.productTitle)
+        truncate(frame.productTitle)
       )}
       {/* [END deleted] */}
     </IndexTable.Cell>
     <IndexTable.Cell>
-      {new Date(qrCode.createdAt).toDateString()}
+      {new Date(frame.createdAt).toDateString()}
     </IndexTable.Cell>
-    <IndexTable.Cell>{qrCode.scans}</IndexTable.Cell>
+    <IndexTable.Cell>{frame.scans}</IndexTable.Cell>
   </IndexTable.Row>
 );
 // [END row]
 
 export default function Index() {
-  const { qrCodes } = useLoaderData();
+  const { frames } = useLoaderData();
   const navigate = useNavigate();
 
   // [START page]
   return (
     <Page>
-      <ui-title-bar title="QR codes">
-        <button variant="primary" onClick={() => navigate("/app/qrcodes/new")}>
-          Create QR code
+      <ui-title-bar title="Frames">
+        <button variant="primary" onClick={() => navigate("/app/frames/new")}>
+          Create Frame
         </button>
       </ui-title-bar>
       <Layout>
         <Layout.Section>
           <Card padding="0">
-            {qrCodes.length === 0 ? (
-              <EmptyQRCodeState onAction={() => navigate("qrcodes/new")} />
+            {frames.length === 0 ? (
+              <EmptyFrameState onAction={() => navigate("frames/new")} />
             ) : (
-              <QRTable qrCodes={qrCodes} />
+              <FrameTable frames={frames} />
             )}
           </Card>
         </Layout.Section>
