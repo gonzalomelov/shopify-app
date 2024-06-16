@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// [START session-model]
 model Session {
   id          String    @id
   shop        String
@@ -20,6 +21,8 @@ model Session {
   accessToken String
   userId      BigInt?
 }
+
+// [END session-model]
 
 // [START frame-model]
 model Frame {
@@ -32,6 +35,23 @@ model Frame {
   destination      String
   scans            Int      @default(0)
   createdAt        DateTime @default(now())
+  image            String
+  button           String
 }
 
 // [END frame-model]
+
+// [START product-model]
+model Product {
+  id          String   @id
+  title       String
+  description String
+  shop        String
+  handle      String
+  variantId   String
+  alt         String   @db.Text
+  image       String
+  createdAt   DateTime @default(now())
+}
+
+// [END product-model]
