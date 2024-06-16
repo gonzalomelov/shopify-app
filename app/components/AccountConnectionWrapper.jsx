@@ -20,22 +20,23 @@ function AccountConnectionWrapper() {
     const top = (window.screen.height / 2) - (height / 2);
 
     const popWin = window.open(
-      'http://localhost:3000/sign-in',
+      `${process.env.TARGET_ONCHAIN_URL}/sign-in`,
       'merchantWindow',
       `width=${width},height=${height},top=${top},left=${left}`
     );
 
     if (popWin) {
       const receiveMessage = async (event) => {
-        if (event.origin === "https://transactions-appreciation-joy-sv.trycloudflare.com") {
+        if (event.origin === process.env.SHOPIFY_APP_URL) {
           if (event.data.source === 'target-onchain' && event.data.token) {
             try {
-              const response = await fetch(`https://possible-ocelot-87.clerk.accounts.dev/v1/client?__clerk_db_jwt=${event.data.token}`);
+              const response = await fetch(`${process.env.CLERK_URL}/v1/client?__clerk_db_jwt=${event.data.token}`);
               if (!response.ok) {
                 throw new Error('Network response was not ok');
               }
               const result = await response.json();
 
+              // const id = result.response.sessions[0].user.id;
               const email = result.response.sessions[0].user.email_addresses[0].email_address;
               const imageUrl = result.response.sessions[0].user.image_url;
 
@@ -71,7 +72,7 @@ function AccountConnectionWrapper() {
   const terms = connected ? null : (
     <p>
       By clicking <strong>Connect</strong>, you agree to accept Target Onchain’s{' '}
-      <Link url="http://localhost:3000/termsAndConditions" target="_blank">terms and conditions</Link>. You’ll pay a
+      <Link url={`${process.env.NEXT_PUBLIC_TERMS_URL}/termsAndConditions`} target="_blank">terms and conditions</Link>. You’ll pay a
       commission rate of 15% on sales made through Target Onchain.
     </p>
   );
