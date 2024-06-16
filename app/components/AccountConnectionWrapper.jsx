@@ -1,11 +1,14 @@
 import { Link, AccountConnection } from '@shopify/polaris';
 import { useState, useCallback } from 'react';
+import { useLoaderData } from "@remix-run/react";
 
 function AccountConnectionWrapper() {
   const [connected, setConnected] = useState(false);
   const [accountName, setAccountName] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
   
+  const { env } = useLoaderData();
+
   const handleAction = useCallback(() => {
     if (connected) {
       setAccountName('');
@@ -20,17 +23,17 @@ function AccountConnectionWrapper() {
     const top = (window.screen.height / 2) - (height / 2);
 
     const popWin = window.open(
-      `${process.env.TARGET_ONCHAIN_URL}/sign-in`,
+      `${env.targetOnchainUrl}/sign-in`,
       'merchantWindow',
       `width=${width},height=${height},top=${top},left=${left}`
     );
 
     if (popWin) {
       const receiveMessage = async (event) => {
-        if (event.origin === process.env.SHOPIFY_APP_URL) {
+        if (event.origin === env.shopifyAppUrl) {
           if (event.data.source === 'target-onchain' && event.data.token) {
             try {
-              const response = await fetch(`${process.env.CLERK_URL}/v1/client?__clerk_db_jwt=${event.data.token}`);
+              const response = await fetch(`${env.clerkUrl}/v1/client?__clerk_db_jwt=${event.data.token}`);
               if (!response.ok) {
                 throw new Error('Network response was not ok');
               }
@@ -72,7 +75,7 @@ function AccountConnectionWrapper() {
   const terms = connected ? null : (
     <p>
       By clicking <strong>Connect</strong>, you agree to accept Target Onchain’s{' '}
-      <Link url={`${process.env.NEXT_PUBLIC_TERMS_URL}/termsAndConditions`} target="_blank">terms and conditions</Link>. You’ll pay a
+      <Link url={`${env.targetOnchainUrl}/termsAndConditions`} target="_blank">terms and conditions</Link>. You’ll pay a
       commission rate of 15% on sales made through Target Onchain.
     </p>
   );

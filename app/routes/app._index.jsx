@@ -83,6 +83,11 @@ export async function loader({ request }) {
 
   return json({
     products,
+    env: {
+      shopifyAppUrl: process.env.SHOPIFY_APP_URL,
+      targetOnchainUrl: process.env.TARGET_ONCHAIN_URL,
+      clerkUrl: process.env.CLERK_URL,
+    }
   });
 }
 // [END loader]
