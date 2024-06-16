@@ -16,7 +16,7 @@ export const loader = async ({ params }) => {
 
   return json({
     title: frame.title,
-    image: await getFrameImage(id),
+    image: await getFrameImage(id, frame.image),
   });
 };
 // [END loader]

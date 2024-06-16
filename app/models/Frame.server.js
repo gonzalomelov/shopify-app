@@ -1,9 +1,9 @@
 import invariant from "tiny-invariant";
 import db from "../db.server";
 /**
- * @typedef {import('../services/textToDataUrl').TextToDataURLOptions} TextToDataURLOptions
+ * @typedef {import('../services/imageToDataURL').ImageToDataURLOptions} ImageToDataURLOptions
  */
-import { textToDataURL } from '../services/textToDataUrl';
+import { imageToDataURL } from '../services/imageToDataURL';
 
 // [START get-frame]
 export async function getFrame(id, graphql) {
@@ -15,7 +15,9 @@ export async function getFrame(id, graphql) {
 
   return supplementFrame(frame, graphql);
 }
+// [END get-frame]
 
+// [START get-frames]
 export async function getFrames(shop, graphql) {
   const frames = await db.frame.findMany({
     where: { shop },
@@ -28,22 +30,19 @@ export async function getFrames(shop, graphql) {
     frames.map((frame) => supplementFrame(frame, graphql))
   );
 }
-// [END get-frame]
+// [END get-frames]
 
 // [START get-frame-image]
-export function getFrameImage(id) {
+export function getFrameImage(id, imageUrl) {
   const url = new URL(`/frames/${id}/scan`, process.env.SHOPIFY_APP_URL);
 
-  /** @type {TextToDataURLOptions} */
+  /** @type {ImageToDataURLOptions} */
   const opts = {
     width: 300,
     height: 300,
-    backgroundColor: '#FFBF60FF',
-    textColor: '#010599FF',
-    fontSize: 40,
   };
 
-  return textToDataURL(url.href, opts);
+  return imageToDataURL(imageUrl, opts);
 }
 // [END get-frame-image]
 
@@ -62,7 +61,7 @@ export function getDestinationUrl(frame) {
 
 // [START hydrate-frame]
 async function supplementFrame(frame, graphql) {
-  const frameImagePromise = getFrameImage(frame.id);
+  const frameImagePromise = getFrameImage(frame.id, frame.image);
 
   const response = await graphql(
     `

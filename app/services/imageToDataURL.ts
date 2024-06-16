@@ -2,36 +2,27 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Graphic from './Graphic';
 
-export type TextToDataURLOptions = {
+export type ImageToDataURLOptions = {
   width?: number;
   height?: number;
-  backgroundColor?: string;
-  textColor?: string;
-  fontSize?: number;
 };
 
-export function textToDataURL(
-  text: string,
-  options: TextToDataURLOptions = {}
+export function imageToDataURL(
+  imageUrl: string,
+  options: ImageToDataURLOptions = {}
 ): string {
-  const defaultOptions: Required<TextToDataURLOptions> = {
+  const defaultOptions: Required<ImageToDataURLOptions> = {
     width: 200,
     height: 200,
-    backgroundColor: '#FFFFFF',
-    textColor: '#000000',
-    fontSize: 30,
   };
 
   const opts = { ...defaultOptions, ...options };
 
   // Create the React element using React.createElement
   const svgElement = React.createElement(Graphic, {
-    text,
+    imageUrl,
     width: opts.width,
     height: opts.height,
-    backgroundColor: opts.backgroundColor,
-    textColor: opts.textColor,
-    fontSize: opts.fontSize,
   });
 
   // Render the component to static SVG markup
