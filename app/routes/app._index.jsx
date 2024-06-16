@@ -110,25 +110,6 @@ export default function SetupPage() {
                 <Text as="p" variant="bodyMd">
                   Synced products: {products.length}
                 </Text>
-                <Text as="p" variant="bodyMd">
-                  The app template comes with a setup page which
-                  demonstrates how to create multiple pages within app navigation
-                  using{" "}
-                  <Link
-                    url="https://shopify.dev/docs/apps/tools/app-bridge"
-                    target="_blank"
-                    removeUnderline
-                  >
-                    App Bridge
-                  </Link>
-                  .
-                </Text>
-                <Text as="p" variant="bodyMd">
-                  To create your own page and have it show up in the app
-                  navigation, add a page inside <Code>app/routes</Code>, and a
-                  link to it in the <Code>&lt;NavMenu&gt;</Code> component found
-                  in <Code>app/routes/app.jsx</Code>.
-                </Text>
               </BlockStack>
             </Card>
           </BlockStack>
@@ -155,25 +136,5 @@ export default function SetupPage() {
         </Layout.Section>
       </Layout>
     </Page>
-  );
-}
-
-/**
- * @param {{ children: React.ReactNode }} props
- */
-function Code({ children }) {
-  return (
-    <Box
-      as="span"
-      padding="025"
-      paddingInlineStart="100"
-      paddingInlineEnd="100"
-      background="bg-surface-active"
-      borderWidth="025"
-      borderColor="border"
-      borderRadius="100"
-    >
-      <code>{children}</code>
-    </Box>
   );
 }
