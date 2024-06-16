@@ -40,6 +40,8 @@ export async function loader({ request, params }) {
     return json({
       destination: "product",
       title: "",
+      image: "",
+      button: "",
     });
   }
 
@@ -124,6 +126,8 @@ export default function FrameForm() {
   function handleSave() {
     const data = {
       title: formState.title,
+      image: formState.image,
+      button: formState.button,
       productId: formState.productId || "",
       productVariantId: formState.productVariantId || "",
       productHandle: formState.productHandle || "",
@@ -148,25 +152,42 @@ export default function FrameForm() {
       <Layout>
         <Layout.Section>
           <BlockStack gap="500">
-            {/* [START title] */}
+            {/* [START basic-information] */}
             <Card>
               <BlockStack gap="500">
                 <Text as={"h2"} variant="headingLg">
-                  Title
+                  Basic information
                 </Text>
                 <TextField
                   id="title"
                   helpText="Only store staff can see this title"
-                  label="title"
-                  labelHidden
+                  label="Title"
                   autoComplete="off"
                   value={formState.title}
                   onChange={(title) => setFormState({ ...formState, title })}
                   error={errors.title}
                 />
+                <TextField
+                  id="image"
+                  helpText="Go to https://admin.shopify.com/store/onchain-summer/content/files?selectedView=all to upload your file and then paste the link here"
+                  label="Image"
+                  autoComplete="off"
+                  value={formState.image}
+                  onChange={(image) => setFormState({ ...formState, image })}
+                  error={errors.image}
+                />
+                <TextField
+                  id="button"
+                  helpText="Text for the main Frame button"
+                  label="Button"
+                  autoComplete="off"
+                  value={formState.button}
+                  onChange={(button) => setFormState({ ...formState, button })}
+                  error={errors.button}
+                />
               </BlockStack>
             </Card>
-            {/* [END title] */}
+            {/* [END basic-information] */}
             <Card>
               <BlockStack gap="500">
                 {/* [START product] */}
@@ -248,28 +269,37 @@ export default function FrameForm() {
             <Text as={"h2"} variant="headingLg">
               Frame
             </Text>
-            {frame ? (
+            <br />
+            {/* {frame ? (
               <EmptyState image={frame.image} imageContained={true} />
             ) : (
               <EmptyState image="">
                 Your Frame will appear here after you save
               </EmptyState>
-            )}
+            )} */}
             <BlockStack gap="300">
-              <Button
+              {/* <Button
                 disabled={!frame?.image}
                 url={frame?.image}
                 download
                 variant="primary"
               >
                 Download
+              </Button> */}
+              <Button
+                disabled={!frame.id}
+                url={`https://warpcast.com/~/compose?text=Check%20out%20our%20new%20collection!&embeds[]=https://7de5-186-52-94-247.ngrok-free.app/api/frame/${frame.id}/html`}
+                target="_blank"
+                variant="primary"
+              >
+                Cast on Warpcast
               </Button>
               <Button
                 disabled={!frame.id}
-                url={`/frames/${frame.id}`}
+                url={`https://warpcast.com/~/developers/frames?url=https://7de5-186-52-94-247.ngrok-free.app/api/frame/${frame.id}/html`}
                 target="_blank"
               >
-                Go to public URL
+                Live Preview
               </Button>
             </BlockStack>
           </Card>
