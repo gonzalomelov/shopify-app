@@ -45,7 +45,11 @@ export async function loader({ request, params }) {
     });
   }
 
-  return json(await getFrame(Number(params.id), admin.graphql));
+  return json({
+    frame: await getFrame(Number(params.id), admin.graphql),
+    env: {
+      targetOnchainUrl: process.env.TARGET_ONCHAIN_URL,
+    }});
   // [END data]
 }
 
@@ -84,7 +88,7 @@ export async function action({ request, params }) {
 export default function FrameForm() {
   const errors = useActionData()?.errors || {};
 
-  const frame = useLoaderData();
+  const { frame, env } = useLoaderData();
   const [formState, setFormState] = useState(frame);
   const [cleanFormState, setCleanFormState] = useState(frame);
   const isDirty = JSON.stringify(formState) !== JSON.stringify(cleanFormState);
@@ -288,7 +292,7 @@ export default function FrameForm() {
               </Button> */}
               <Button
                 disabled={!frame.id}
-                url={`https://warpcast.com/~/compose?text=Check%20out%20our%20new%20collection!&embeds[]=https://7de5-186-52-94-247.ngrok-free.app/api/frame/${frame.id}/html`}
+                url={`https://warpcast.com/~/compose?text=Check%20out%20our%20new%20collection!&embeds[]=${env.targetOnchainUrl}/api/frame/${frame.id}/html`}
                 target="_blank"
                 variant="primary"
               >
@@ -296,7 +300,7 @@ export default function FrameForm() {
               </Button>
               <Button
                 disabled={!frame.id}
-                url={`https://warpcast.com/~/developers/frames?url=https://7de5-186-52-94-247.ngrok-free.app/api/frame/${frame.id}/html`}
+                url={`https://warpcast.com/~/developers/frames?url=${env.targetOnchainUrl}/api/frame/${frame.id}/html`}
                 target="_blank"
               >
                 Live Preview
