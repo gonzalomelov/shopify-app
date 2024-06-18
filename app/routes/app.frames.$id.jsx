@@ -179,7 +179,7 @@ export default function FrameForm() {
                 />
                 <TextField
                   id="image"
-                  helpText="Go to https://admin.shopify.com/store/onchain-summer/content/files?selectedView=all to upload your file and then paste the link here"
+                  helpText="Go to 'Content -> Files' to upload your file and then paste the link here"
                   label="Image"
                   autoComplete="off"
                   value={formState.image}
