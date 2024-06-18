@@ -36,20 +36,26 @@ export async function loader({ request, params }) {
   // [END authenticate]
 
   // [START data]
+  const env = {
+    targetOnchainUrl: process.env.TARGET_ONCHAIN_URL,
+  };
+
   if (params.id === "new") {
     return json({
-      destination: "product",
-      title: "",
-      image: "",
-      button: "",
+      frame: {
+        destination: "product",
+        title: "",
+        image: "",
+        button: "",
+      },
+      env
     });
   }
 
   return json({
     frame: await getFrame(Number(params.id), admin.graphql),
-    env: {
-      targetOnchainUrl: process.env.TARGET_ONCHAIN_URL,
-    }});
+    env
+  });
   // [END data]
 }
 
