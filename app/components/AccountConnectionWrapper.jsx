@@ -49,6 +49,7 @@ function AccountConnectionWrapper() {
               setConnected((connected) => !connected);
 
               popWin.close();
+              window.removeEventListener("message", receiveMessage);
             } catch (error) {
               console.error('Error fetching data:', error);
             }
