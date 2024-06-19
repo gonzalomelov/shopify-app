@@ -93,11 +93,11 @@ export async function loader({ request }) {
 // [END loader]
 
 export default function SetupPage() {
-  const { products } = useLoaderData();
+  const { products, env } = useLoaderData();
 
   return (
     <Page>
-      <TitleBar title="Setup page" />
+      <TitleBar title="Setup" />
       <Layout>
         <Layout.Section>
           <BlockStack gap="300">
@@ -112,6 +112,16 @@ export default function SetupPage() {
                 </Text>
               </BlockStack>
             </Card>
+            <Card>
+              <BlockStack gap="300">
+              <Text as="h2" variant="headingMd">
+                Billing
+              </Text>
+                <Text as="p" variant="bodyMd">
+                  You won't be charged any commission on sales made through Target Onchain.
+                </Text>
+              </BlockStack>
+            </Card>
           </BlockStack>
         </Layout.Section>
         <Layout.Section variant="oneThird">
@@ -123,7 +133,7 @@ export default function SetupPage() {
               <List>
                 <List.Item>
                   <Link
-                    url="https://shopify.dev/docs/apps/design-guidelines/navigation#app-nav"
+                    url={`${env.targetOnchainUrl}/about`}
                     target="_blank"
                     removeUnderline
                   >

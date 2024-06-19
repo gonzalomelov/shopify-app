@@ -76,8 +76,7 @@ function AccountConnectionWrapper() {
   const terms = connected ? null : (
     <p>
       By clicking <strong>Connect</strong>, you agree to accept Target Onchain’s{' '}
-      <Link url={`${env.targetOnchainUrl}/termsAndConditions`} target="_blank">terms and conditions</Link>. You’ll pay a
-      commission rate of 15% on sales made through Target Onchain.
+      <Link url={`${env.targetOnchainUrl}/termsAndConditions`} target="_blank">terms and conditions</Link>.
     </p>
   );
 
