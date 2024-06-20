@@ -8,6 +8,8 @@ export const action = async ({ request }) => {
     case "APP_UNINSTALLED":
       if (session) {
         await db.session.deleteMany({ where: { shop } });
+        await db.frame.deleteMany({ where: { shop } });
+        await db.product.deleteMany({ where: { shop } });
       }
       break;
     case "CUSTOMERS_DATA_REQUEST":
