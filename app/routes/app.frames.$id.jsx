@@ -108,11 +108,12 @@ export default function FrameForm() {
 
   const navigate = useNavigate();
 
-  // [START select-product]
-  async function selectProduct() {
+  // [START select-products]
+  async function selectProducts() {
     const products = await window.shopify.resourcePicker({
       type: "product",
-      action: "select", // customized action verb, either 'select' or 'add',
+      action: "select",
+      multiple: true,
     });
 
     if (products) {
@@ -126,10 +127,11 @@ export default function FrameForm() {
         productHandle: handle,
         productAlt: images[0]?.altText,
         productImage: images[0]?.originalSrc,
+        totalProducts: products.length,
       });
     }
   }
-  // [END select-product]
+  // [END select-products]
 
   // [START save]
   const submit = useSubmit();
@@ -203,28 +205,34 @@ export default function FrameForm() {
                 {/* [START product] */}
                 <InlineStack align="space-between">
                   <Text as={"h2"} variant="headingLg">
-                    Product
+                    Products
                   </Text>
                   {formState.productId ? (
-                    <Button variant="plain" onClick={selectProduct}>
-                      Change product
+                    <Button variant="plain" onClick={selectProducts}>
+                      Change products
                     </Button>
                   ) : null}
                 </InlineStack>
                 {formState.productId ? (
                   <InlineStack blockAlign="center" gap="500">
-                    <Thumbnail
+                    {/* <Thumbnail
                       source={formState.productImage || ImageIcon}
                       alt={formState.productAlt}
                     />
                     <Text as="span" variant="headingMd" fontWeight="semibold">
                       {formState.productTitle}
+                    </Text> */}
+                    <Text as="span">
+                      Selected products:
+                    </Text>
+                    <Text as="span" variant="headingMd" fontWeight="semibold">
+                      {formState.totalProducts}
                     </Text>
                   </InlineStack>
                 ) : (
                   <BlockStack gap="200">
-                    <Button onClick={selectProduct} id="select-product">
-                      Select product
+                    <Button onClick={selectProducts} id="select-products">
+                      Select products
                     </Button>
                     {errors.productId ? (
                       <InlineError
