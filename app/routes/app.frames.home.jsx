@@ -30,14 +30,14 @@ export async function loader({ request }) {
 // [START empty]
 const EmptyFrameState = ({ onAction }) => (
   <EmptyState
-    heading="Create unique Frames for your product"
+    heading="Create personalized Frames for your customers"
     action={{
       content: "Create Frame",
       onAction,
     }}
     image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
   >
-    <p>Allow customers to scan codes and buy products using their phones.</p>
+    <p>Personalize the frames you show to your customers based on their onchain data.</p>
   </EmptyState>
 );
 // [END empty]
