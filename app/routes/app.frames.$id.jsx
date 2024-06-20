@@ -243,11 +243,11 @@ export default function FrameForm() {
                   </BlockStack>
                 )}
                 {/* [END product] */}
-                <Bleed marginInlineStart="200" marginInlineEnd="200">
+                {/* <Bleed marginInlineStart="200" marginInlineEnd="200">
                   <Divider />
-                </Bleed>
+                </Bleed> */}
                 {/* [START destination] */}
-                <InlineStack gap="500" align="space-between" blockAlign="start">
+                {/* <InlineStack gap="500" align="space-between" blockAlign="start">
                   <ChoiceList
                     title="Scan destination"
                     choices={[
@@ -275,7 +275,7 @@ export default function FrameForm() {
                       Go to destination URL
                     </Button>
                   ) : null}
-                </InlineStack>
+                </InlineStack> */}
               </BlockStack>
               {/* [END destination] */}
             </Card>
