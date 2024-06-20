@@ -353,7 +353,7 @@ export default function FrameForm() {
       <FooterHelp>
         Learn more about{' '}
         <Link to={`${env.targetOnchainUrl}/support`} target="_blank">
-          Target Onchain
+          frames
         </Link>
       </FooterHelp>
     </Page>
