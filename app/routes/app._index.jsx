@@ -74,7 +74,7 @@ export async function action({ request }) {
 
 // [START loader]
 export async function loader({ request }) {
-  const { admin: { graphql }, session: { id, shop } } = await authenticate.admin(request);
+  const { admin, session } = await authenticate.admin(request);
 
   const env = {
     shopifyAppUrl: process.env.SHOPIFY_APP_URL,
@@ -82,7 +82,7 @@ export async function loader({ request }) {
     clerkUrl: process.env.CLERK_URL,
   };
 
-  const sessionDb = await db.session.findFirst({ where: { id } });
+  const sessionDb = await db.session.findFirst({ where: { id: session.id } });
 
   if (!sessionDb) {
     throw new Error('Session not found');
@@ -92,12 +92,12 @@ export async function loader({ request }) {
   if (sessionDb.clerkDbJwt) {
     const response = await fetch(`${env.clerkUrl}/v1/client?__clerk_db_jwt=${sessionDb.clerkDbJwt}`);
     if (!response.ok) {
-      await db.session.update({ where: { id }, data: { clerkDbJwt: null } });
+      await db.session.update({ where: { id: session.id }, data: { clerkDbJwt: null } });
     } else {
       const result = await response.json();
   
       if (result.response.sessions.length === 0) {
-        await db.session.update({ where: { id }, data: { clerkDbJwt: null } });
+        await db.session.update({ where: { id: session.id }, data: { clerkDbJwt: null } });
       } else {
         const accountName = result.response.sessions[0].public_user_data.identifier
           ? result.response.sessions[0].public_user_data.identifier
@@ -119,7 +119,7 @@ export async function loader({ request }) {
     }
   }
 
-  const products = await getProducts(graphql);
+  const products = await getProducts(admin.graphql);
 
   // FIXME: Must be changed to sync. Deletes should be handled too.
   const upsertOperations = products.map((product) => {
@@ -133,7 +133,7 @@ export async function loader({ request }) {
       variantId,
       alt: image?.altText ?? '',
       image: image?.originalSrc ?? '',
-      shop
+      shop: session.shop
     };
     
     return db.product.upsert({
