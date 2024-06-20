@@ -4,6 +4,7 @@ import { authenticate } from "../shopify.server";
 import {
   Card,
   EmptyState,
+  FooterHelp,
   Layout,
   Page,
   IndexTable,
@@ -19,10 +20,18 @@ import { AlertDiamondIcon, ImageIcon } from "@shopify/polaris-icons";
 // [START loader]
 export async function loader({ request }) {
   const { admin, session } = await authenticate.admin(request);
+  
+  const env = {
+    shopifyAppUrl: process.env.SHOPIFY_APP_URL,
+    targetOnchainUrl: process.env.TARGET_ONCHAIN_URL,
+    clerkUrl: process.env.CLERK_URL,
+  };
+
   const frames = await getFrames(session.shop, admin.graphql);
 
   return json({
     frames,
+    env,
   });
 }
 // [END loader]
@@ -110,7 +119,7 @@ const FrameTableRow = ({ frame }) => (
 // [END row]
 
 export default function Index() {
-  const { frames } = useLoaderData();
+  const { frames, env } = useLoaderData();
   const navigate = useNavigate();
 
   // [START page]
@@ -132,6 +141,12 @@ export default function Index() {
           </Card>
         </Layout.Section>
       </Layout>
+      <FooterHelp>
+        Learn more about{' '}
+        <Link to={`${env.targetOnchainUrl}/support`} target="_blank">
+          Target Onchain
+        </Link>
+      </FooterHelp>
     </Page>
   );
   // [END page]

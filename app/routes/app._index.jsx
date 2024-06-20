@@ -4,6 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import {
   Box,
   Card,
+  FooterHelp,
   InlineStack,
   Layout,
   Link,
@@ -210,6 +211,12 @@ export default function SetupPage() {
             </BlockStack>
           </Card>
         </Layout.AnnotatedSection>
+        <FooterHelp>
+          Learn more about{' '}
+          <Link url={`${env.targetOnchainUrl}/support`} target="_blank">
+            Target Onchain
+          </Link>
+        </FooterHelp>
       </Layout>
     </Page>
   );

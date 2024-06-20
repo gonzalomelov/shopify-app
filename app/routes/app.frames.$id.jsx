@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { json, redirect } from "@remix-run/node";
 import {
+  Link,
   useActionData,
   useLoaderData,
   useNavigation,
@@ -15,6 +16,7 @@ import {
   ChoiceList,
   Divider,
   EmptyState,
+  FooterHelp,
   InlineStack,
   InlineError,
   Layout,
@@ -114,6 +116,7 @@ export default function FrameForm() {
       type: "product",
       action: "select",
       multiple: true,
+      // selectionIds: ['gid://shopify/Product/1']
     });
 
     if (products) {
@@ -347,6 +350,12 @@ export default function FrameForm() {
         </Layout.Section>
         {/* [END actions] */}
       </Layout>
+      <FooterHelp>
+        Learn more about{' '}
+        <Link to={`${env.targetOnchainUrl}/support`} target="_blank">
+          Target Onchain
+        </Link>
+      </FooterHelp>
     </Page>
   );
   // [END polaris]
