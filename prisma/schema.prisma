@@ -20,6 +20,7 @@ model Session {
   expires     DateTime?
   accessToken String
   userId      BigInt?
+  clerkDbJwt  String?   @db.Text
 }
 
 // [END session-model]

@@ -1,19 +1,24 @@
 import { Link, AccountConnection } from '@shopify/polaris';
 import { useState, useCallback } from 'react';
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useSubmit } from "@remix-run/react";
 
 function AccountConnectionWrapper() {
-  const [connected, setConnected] = useState(false);
-  const [accountName, setAccountName] = useState('');
-  const [avatarUrl, setAvatarUrl] = useState('');
+  const { env, account } = useLoaderData();
   
-  const { env } = useLoaderData();
+  const [connected, setConnected] = useState(!!account);
+  const [accountName, setAccountName] = useState(account ? account.accountName : '');
+  const [avatarUrl, setAvatarUrl] = useState(account ? account.avatarUrl : '');
+
+  const submit = useSubmit();
 
   const handleAction = useCallback(() => {
     if (connected) {
+      submit({ action: "disconnect" }, { method: "post" });
+
       setAccountName('');
       setAvatarUrl('');
       setConnected(false);
+      
       return;
     }
 
@@ -39,14 +44,23 @@ function AccountConnectionWrapper() {
               }
               const result = await response.json();
 
-              // const id = result.response.sessions[0].user.id;
-              const email = result.response.sessions[0].user.email_addresses[0].email_address;
-              const imageUrl = result.response.sessions[0].user.image_url;
+              const accountName = result.response.sessions[0].public_user_data.identifier
+                ? result.response.sessions[0].public_user_data.identifier
+                : result.response.sessions[0].public_user_data.first_name
+                  ? result.response.sessions[0].public_user_data.first_name
+                  : result.response.sessions[0].user.web3_wallets
+                    ? result.response.sessions[0].user.web3_wallets.web3_wallet
+                    : '';
 
-              setAccountName(email);
-              setAvatarUrl(imageUrl);
+              const avatarUrl = result.response.sessions[0].public_user_data.has_image
+                ? result.response.sessions[0].public_user_data.image_url
+                : '';
 
-              setConnected((connected) => !connected);
+              setAccountName(accountName);
+              setAvatarUrl(avatarUrl);
+              setConnected(true);
+
+              submit({ action: "connect", clerkDbJwt: event.data.token }, { method: "post" });
 
               popWin.close();
               window.removeEventListener("message", receiveMessage);
