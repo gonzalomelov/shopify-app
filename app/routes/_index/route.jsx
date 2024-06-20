@@ -23,8 +23,8 @@ export default function App() {
   return (
     <div className="index">
       <div className="content">
-        <h1>A short heading about [your app]</h1>
-        <p>A tagline about [your app] that describes your value proposition.</p>
+        <h1>Onchain Hyper-Personalized Commerce</h1>
+        <p>Deliver personalized products to your users based on their onchain data.</p>
         {showForm && (
           <Form method="post" action="/auth/login">
             <label>
@@ -37,16 +37,13 @@ export default function App() {
         )}
         <ul>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Hyper-Personalization</strong>. Use onchain data to deliver tailored product recommendations to each customer.
           </li>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Seamless Integration</strong>. Easily sync and manage personalized frames within your Shopify store.
           </li>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Enhanced Marketing</strong>. Boost engagement and sales with targeted, relevant product suggestions.
           </li>
         </ul>
       </div>
