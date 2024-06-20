@@ -202,7 +202,7 @@ export default function FrameForm() {
             {/* [END basic-information] */}
             <Card>
               <BlockStack gap="500">
-                {/* [START product] */}
+                {/* [START products] */}
                 <InlineStack align="space-between">
                   <Text as={"h2"} variant="headingLg">
                     Products
@@ -242,7 +242,7 @@ export default function FrameForm() {
                     ) : null}
                   </BlockStack>
                 )}
-                {/* [END product] */}
+                {/* [END products] */}
                 {/* <Bleed marginInlineStart="200" marginInlineEnd="200">
                   <Divider />
                 </Bleed> */}
