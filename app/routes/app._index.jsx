@@ -4,6 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import {
   Box,
   Card,
+  InlineStack,
   Layout,
   Link,
   List,
@@ -157,54 +158,58 @@ export default function SetupPage() {
   const { products, env } = useLoaderData();
 
   return (
-    <Page>
-      <TitleBar title="Setup" />
+    <Page fullWidth>
+      <TitleBar title="Target Onchain" />
       <Layout>
-        <Layout.Section>
-          <BlockStack gap="300">
-            <AccountConnectionWrapper />
-            <Card>
-              <BlockStack gap="300">
-              <Text as="h2" variant="headingMd">
-                Publishing
-              </Text>
-                <Text as="p" variant="bodyMd">
-                  Synced products: {products.length}
-                </Text>
-              </BlockStack>
-            </Card>
-            <Card>
-              <BlockStack gap="300">
-              <Text as="h2" variant="headingMd">
-                Billing
-              </Text>
-                <Text as="p" variant="bodyMd">
-                  You won't be charged any commission on sales made through Target Onchain.
-                </Text>
-              </BlockStack>
-            </Card>
-          </BlockStack>
-        </Layout.Section>
-        <Layout.Section variant="oneThird">
+        <Layout.AnnotatedSection
+          id="targetOnchainAccount"
+          title="Target Onchain account"
+          description="Connect your Target Onchain account so you can manage and sync with Target Onchain."
+        >
+          <AccountConnectionWrapper />
+        </Layout.AnnotatedSection>
+        <Layout.AnnotatedSection
+          id="publishing"
+          title="Publishing"
+          description="Products that are being synced to your catalog, or have errors preventing their sync, are shown here."
+        >
           <Card>
-            <BlockStack gap="200">
+            <BlockStack gap="300">
               <Text as="h2" variant="headingMd">
-                Resources
+                Product Status
               </Text>
-              <List>
-                <List.Item>
-                  <Link
-                    url={`${env.targetOnchainUrl}/about`}
-                    target="_blank"
-                    removeUnderline
-                  >
-                    Getting Started
-                  </Link>
-                </List.Item>
-              </List>
+              <InlineStack blockAlign="center" gap="100">
+                <Text as="span" fontWeight="semibold">
+                  {products.length}
+                </Text>
+                <Text as="span">
+                  products are available to Target Onchain
+                </Text>
+              </InlineStack>
             </BlockStack>
           </Card>
-        </Layout.Section>
+        </Layout.AnnotatedSection>
+        <Layout.AnnotatedSection
+          id="billing"
+          title="Billing"
+          description="Your Target Onchain commission and billing information."
+        >
+          <Card>
+            <BlockStack gap="300">
+              <InlineStack blockAlign="center" gap="100">
+                <Text as="span">
+                  Commission:
+                </Text>
+                <Text as="span" fontWeight="semibold">
+                  0%
+                </Text>
+              </InlineStack>
+              <Text as="p" variant="bodyMd">
+                You won't be charged any commission on sales or fees for using Target Onchain.
+              </Text>
+            </BlockStack>
+          </Card>
+        </Layout.AnnotatedSection>
       </Layout>
     </Page>
   );
