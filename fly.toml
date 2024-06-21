@@ -28,3 +28,4 @@ primary_region = 'yyz'
   SCOPES = "write_products"
   TARGET_ONCHAIN_URL = "https://target-onchain-app.vercel.app"
   CLERK_URL = "https://possible-ocelot-87.clerk.accounts.dev"
+  APP_NAME = "target-onchain"

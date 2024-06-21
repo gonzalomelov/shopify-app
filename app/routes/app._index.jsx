@@ -3,8 +3,10 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import {
   Box,
+  Button,
   Card,
   FooterHelp,
+  InlineGrid,
   InlineStack,
   Layout,
   Link,
@@ -82,6 +84,7 @@ export async function loader({ request }) {
     shopifyAppUrl: process.env.SHOPIFY_APP_URL,
     targetOnchainUrl: process.env.TARGET_ONCHAIN_URL,
     clerkUrl: process.env.CLERK_URL,
+    appName: process.env.APP_NAME,
   };
 
   const sessionDb = await db.session.findFirst({ where: { id: session.id } });
@@ -176,15 +179,25 @@ export default function SetupPage() {
         >
           <Card>
             <BlockStack gap="300">
-              <Text as="h2" variant="headingMd">
-                Product Status
-              </Text>
+              <InlineGrid columns="1fr auto">
+                <Text as="h2" variant="headingMd">
+                  Product Status
+                </Text>
+                <Button
+                  variant="plain"
+                  target="_top"
+                  url={`shopify://admin/bulk/product?resource_name=Product&edit=status,product_taxonomy_node_id,vendor,variants.price&selectedView=all&order=title+ascending&return_to=/apps/${env.appName}/app`}
+                  accessibilityLabel="Manage availability"
+                >
+                  Manage availability
+                </Button>
+              </InlineGrid>
               <InlineStack blockAlign="center" gap="100">
                 <Text as="span" fontWeight="semibold">
                   {products.length}
                 </Text>
                 <Text as="span">
-                  products are available to Target Onchain
+                  products are available to Target Onchain.
                 </Text>
               </InlineStack>
             </BlockStack>
