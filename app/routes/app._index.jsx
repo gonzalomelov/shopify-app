@@ -102,9 +102,10 @@ export async function loader({ request }) {
 
   const products = await getProducts(admin.rest, session);
 
-  // FIXME: Must be changed to sync. Deletes should be handled too.
+  await db.product.deleteMany({});
+
   const upsertOperations = products.map((product) => {
-    const { images, variants, ...restOfProduct } = product;
+    const { images, variants } = product;
 
     const variantId = variants.length > 0 ? variants[0].id.toString() : null;
     const image = images.length > 0 ? images[0] : null;
