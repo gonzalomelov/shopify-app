@@ -118,7 +118,7 @@ export async function loader({ request }) {
       handle: product.handle,
       variantId,
       alt: image?.altText ?? '',
-      image: image?.originalSrc ?? '',
+      image: image?.src ?? '',
       createdAt: product.created_at,
     };
 
