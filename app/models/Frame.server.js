@@ -52,10 +52,12 @@ export function getDestinationUrl(frame) {
     return `https://${frame.shop}/products/${frame.productHandle}`;
   }
 
-  const match = /gid:\/\/shopify\/ProductVariant\/([0-9]+)/.exec(frame.productVariantId);
-  invariant(match, "Unrecognized product variant ID");
+  // const match = /gid:\/\/shopify\/ProductVariant\/([0-9]+)/.exec(frame.productVariantId);
+  // invariant(match, "Unrecognized product variant ID");
 
-  return `https://${frame.shop}/cart/${match[1]}:1`;
+  // return `https://${frame.shop}/cart/${match[1]}:1`;
+
+  return `https://${frame.shop}/cart/${frame.productVariantId}:1`;
 }
 // [END get-destination]
 
@@ -63,37 +65,37 @@ export function getDestinationUrl(frame) {
 async function supplementFrame(frame, graphql) {
   const frameImagePromise = getFrameImage(frame.id, frame.image);
 
-  const response = await graphql(
-    `
-      query supplementFrame($id: ID!) {
-        product(id: $id) {
-          title
-          images(first: 1) {
-            nodes {
-              altText
-              url
-            }
-          }
-        }
-      }
-    `,
-    {
-      variables: {
-        id: frame.productId,
-      },
-    }
-  );
+  // const response = await graphql(
+  //   `
+  //     query supplementFrame($id: ID!) {
+  //       product(id: $id) {
+  //         title
+  //         images(first: 1) {
+  //           nodes {
+  //             altText
+  //             url
+  //           }
+  //         }
+  //       }
+  //     }
+  //   `,
+  //   {
+  //     variables: {
+  //       id: frame.productId,
+  //     },
+  //   }
+  // );
 
-  const {
-    data: { product },
-  } = await response.json();
+  // const {
+  //   data: { product },
+  // } = await response.json();
 
   return {
     ...frame,
-    productDeleted: !product?.title,
-    productTitle: product?.title,
-    productImage: product?.images?.nodes[0]?.url,
-    productAlt: product?.images?.nodes[0]?.altText,
+    // productDeleted: !product?.title,
+    // productTitle: product?.title,
+    // productImage: product?.images?.nodes[0]?.url,
+    // productAlt: product?.images?.nodes[0]?.altText,
     destinationUrl: getDestinationUrl(frame),
     image: await frameImagePromise,
   };
