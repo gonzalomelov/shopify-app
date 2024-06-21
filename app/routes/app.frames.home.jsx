@@ -68,7 +68,7 @@ const FrameTable = ({ frames }) => (
     headings={[
       { title: "Thumbnail", hidden: true },
       { title: "Title" },
-      { title: "Product" },
+      // { title: "Product" },
       { title: "Date created" },
       // { title: "Scans" },
     ]}
@@ -86,7 +86,8 @@ const FrameTableRow = ({ frame }) => (
   <IndexTable.Row id={frame.id} position={frame.id}>
     <IndexTable.Cell>
       <Thumbnail
-        source={frame.productImage || ImageIcon}
+        // source={frame.productImage || ImageIcon}
+        source={ImageIcon}
         alt={frame.productTitle}
         size="small"
       />
@@ -94,8 +95,8 @@ const FrameTableRow = ({ frame }) => (
     <IndexTable.Cell>
       <Link to={`/app/frames/${frame.id}`}>{truncate(frame.title)}</Link>
     </IndexTable.Cell>
-    <IndexTable.Cell>
-      {/* [START deleted] */}
+    {/* [START deleted] */}
+    {/* <IndexTable.Cell>
       {frame.productDeleted ? (
         <InlineStack align="start" gap="200">
           <span style={{ width: "20px" }}>
@@ -108,8 +109,8 @@ const FrameTableRow = ({ frame }) => (
       ) : (
         truncate(frame.productTitle)
       )}
-      {/* [END deleted] */}
-    </IndexTable.Cell>
+    </IndexTable.Cell> */}
+    {/* [END deleted] */}
     <IndexTable.Cell>
       {new Date(frame.createdAt).toDateString()}
     </IndexTable.Cell>
