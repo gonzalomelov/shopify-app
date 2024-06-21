@@ -2,6 +2,7 @@ import { authenticate } from "../shopify.server";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import {
+  Badge,
   Box,
   Button,
   Card,
@@ -181,7 +182,7 @@ export default function SetupPage() {
             <BlockStack gap="300">
               <InlineGrid columns="1fr auto">
                 <Text as="h2" variant="headingMd">
-                  Product Status
+                  Product status
                 </Text>
                 <Button
                   variant="plain"
@@ -198,6 +199,21 @@ export default function SetupPage() {
                 </Text>
                 <Text as="span">
                   products are available to Target Onchain.
+                </Text>
+              </InlineStack>
+              <InlineStack blockAlign="center" gap="100">
+                <Badge
+                  tone="success"
+                  progress="complete"
+                  toneAndProgressLabelOverride="Status: Published. Your online store products are synced with Target Onchain."
+                >
+                  Published
+                </Badge>
+                <Text as="span" fontWeight="semibold">
+                  {products.length}
+                </Text>
+                <Text as="span">
+                  products
                 </Text>
               </InlineStack>
             </BlockStack>
