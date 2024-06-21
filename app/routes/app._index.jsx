@@ -20,39 +20,14 @@ import { TitleBar } from "@shopify/app-bridge-react";
 import AccountConnectionWrapper from '../components/AccountConnectionWrapper';
 import db from "../db.server";
 
-export async function getProducts(graphql) {
-  const response = await graphql(`
-    {
-      products(first: 25) {
-        nodes {
-          id
-          title
-          description
-          handle
-          images(first: 1) {
-            edges {
-              node {
-                altText
-                originalSrc
-              }
-            }
-          }
-          variants(first: 1) {
-            edges {
-              node {
-                id
-              }
-            }
-          }
-        }
-      }
-    }`);
+export async function getProducts(rest, session) {
+  const response = await rest.resources.ProductListing.all({
+    session,
+  });
 
   const {
-    data: {
-      products: { nodes: products },
-    },
-  } = await response.json();
+    data: products
+  } = response;
 
   return products;
 }
@@ -125,25 +100,29 @@ export async function loader({ request }) {
     }
   }
 
-  const products = await getProducts(admin.graphql);
+  const products = await getProducts(admin.rest, session);
 
   // FIXME: Must be changed to sync. Deletes should be handled too.
   const upsertOperations = products.map((product) => {
     const { images, variants, ...restOfProduct } = product;
 
-    const variantId = variants.edges.length > 0 ? variants.edges[0].node.id : null;
-    const image = images.edges.length > 0 ? images.edges[0].node : null;
+    const variantId = variants.length > 0 ? variants[0].id.toString() : null;
+    const image = images.length > 0 ? images[0] : null;
 
     const upsertProduct = {
-      ...restOfProduct,
+      id: product.product_id.toString(),
+      title: product.title,
+      description: product.body_html ?? '',
+      shop: session.shop,
+      handle: product.handle,
       variantId,
       alt: image?.altText ?? '',
       image: image?.originalSrc ?? '',
-      shop: session.shop
+      createdAt: product.created_at,
     };
-    
+
     return db.product.upsert({
-      where: { id: product.id },
+      where: { id: product.product_id.toString() },
       update: upsertProduct,
       create: upsertProduct,
     })
