@@ -44,15 +44,16 @@ model Frame {
 
 // [START product-model]
 model Product {
-  id          String   @id
-  title       String
-  description String
-  shop        String
-  handle      String
-  variantId   String
-  alt         String   @db.Text
-  image       String
-  createdAt   DateTime @default(now())
+  id                    String   @id
+  title                 String
+  description           String
+  shop                  String
+  handle                String
+  variantId             String
+  variantFormattedPrice String
+  alt                   String   @db.Text
+  image                 String
+  createdAt             DateTime @default(now())
 }
 
 // [END product-model]

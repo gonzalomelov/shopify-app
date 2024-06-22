@@ -107,7 +107,10 @@ export async function loader({ request }) {
   const upsertOperations = products.map((product) => {
     const { images, variants } = product;
 
-    const variantId = variants.length > 0 ? variants[0].id.toString() : null;
+    const variant = variants?.[0] ?? null;
+    const variantId = variant?.id?.toString() ?? null;
+    const variantFormattedPrice = variant?.formatted_price ?? null;
+    
     const image = images.length > 0 ? images[0] : null;
 
     const upsertProduct = {
@@ -117,6 +120,7 @@ export async function loader({ request }) {
       shop: session.shop,
       handle: product.handle,
       variantId,
+      variantFormattedPrice,
       alt: image?.altText ?? '',
       image: image?.src ?? '',
       createdAt: product.created_at,
