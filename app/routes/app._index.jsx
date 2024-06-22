@@ -23,6 +23,7 @@ import db from "../db.server";
 export async function getProducts(rest, session) {
   const response = await rest.resources.ProductListing.all({
     session,
+    limit: 250,
   });
 
   const {
