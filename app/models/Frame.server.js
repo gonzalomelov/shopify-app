@@ -52,11 +52,6 @@ export function getDestinationUrl(frame) {
     return `https://${frame.shop}/products/${frame.productHandle}`;
   }
 
-  // const match = /gid:\/\/shopify\/ProductVariant\/([0-9]+)/.exec(frame.productVariantId);
-  // invariant(match, "Unrecognized product variant ID");
-
-  // return `https://${frame.shop}/cart/${match[1]}:1`;
-
   return `https://${frame.shop}/cart/${frame.productVariantId}:1`;
 }
 // [END get-destination]
