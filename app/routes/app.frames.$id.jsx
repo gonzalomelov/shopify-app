@@ -317,7 +317,7 @@ export default function FrameForm() {
               </Button>
               <Button
                 disabled={!frame.id}
-                url={`https://warpcast.com/~/developers/frames?url=${env.targetOnchainUrl}/api/frame/${frame.id}/html`}
+                url={`https://warpcast.com/~/developers/frames?url=${env.targetOnchainUrl}/api/frame/${frame.id}/html?dev=true`}
                 target="_blank"
               >
                 Live Preview
