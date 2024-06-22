@@ -58,7 +58,7 @@ export function getDestinationUrl(frame) {
 
 // [START hydrate-frame]
 async function supplementFrame(frame, graphql) {
-  const frameImagePromise = getFrameImage(frame.id, frame.image);
+  // const frameImagePromise = getFrameImage(frame.id, frame.image);
 
   // const response = await graphql(
   //   `
@@ -92,7 +92,7 @@ async function supplementFrame(frame, graphql) {
     // productImage: product?.images?.nodes[0]?.url,
     // productAlt: product?.images?.nodes[0]?.altText,
     destinationUrl: getDestinationUrl(frame),
-    image: await frameImagePromise,
+    // image: await frameImagePromise,
   };
 }
 // [END hydrate-frame]
