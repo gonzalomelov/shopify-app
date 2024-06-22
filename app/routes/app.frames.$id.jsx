@@ -217,7 +217,7 @@ export default function FrameForm() {
                   ) : null}
                 </InlineStack>
                 {formState.productId ? (
-                  <InlineStack blockAlign="center" gap="500">
+                  <InlineStack blockAlign="center" gap="100">
                     {/* <Thumbnail
                       source={formState.productImage || ImageIcon}
                       alt={formState.productAlt}
@@ -229,7 +229,9 @@ export default function FrameForm() {
                       Selected products:
                     </Text>
                     <Text as="span" variant="headingMd" fontWeight="semibold">
-                      {formState.totalProducts}
+                      {/* {formState.totalProducts} */}
+                      {/* FIXME: This is a temporary fix */}
+                      {formState.totalProducts ?? formState.scans}
                     </Text>
                   </InlineStack>
                 ) : (
