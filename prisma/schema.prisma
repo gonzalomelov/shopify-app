@@ -38,6 +38,7 @@ model Frame {
   createdAt        DateTime @default(now())
   image            String
   button           String
+  matchingCriteria MatchingCriteria     @default(ALL)
 }
 
 // [END frame-model]
@@ -57,3 +58,9 @@ model Product {
 }
 
 // [END product-model]
+
+enum MatchingCriteria {
+  RECEIPTS_XYZ_ALL_TIME_RUNNING
+  COINBASE_ONCHAIN_VERIFICATIONS
+  ALL
+}

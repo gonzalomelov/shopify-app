@@ -49,6 +49,7 @@ export async function loader({ request, params }) {
         title: "",
         image: "",
         button: "",
+        matchingCriteria: "ALL",
       },
       env
     });
@@ -147,6 +148,7 @@ export default function FrameForm() {
       productVariantId: formState.productVariantId || "",
       productHandle: formState.productHandle || "",
       destination: formState.destination,
+      matchingCriteria: formState.matchingCriteria,
     };
 
     setCleanFormState({ ...formState });
@@ -284,6 +286,40 @@ export default function FrameForm() {
               </BlockStack>
               {/* [END destination] */}
             </Card>
+            {/* [START matching-criteria] */}
+            <Card>
+              <BlockStack gap="500">
+                <Text as={"h2"} variant="headingLg">
+                  Matching Criteria
+                </Text>
+                <ChoiceList
+                  title="Choose how to match products"
+                  choices={[
+                    {
+                      label: "Use Receipts.xyz running sessions",
+                      value: "RECEIPTS_XYZ_ALL_TIME_RUNNING"
+                    },
+                    {
+                      label: "Use Coinbase Onchain Verifications country of residence",
+                      value: "COINBASE_ONCHAIN_VERIFICATIONS",
+                    },
+                    {
+                      label: "Use all onchain criteria at the same time (Experimental)",
+                      value: "ALL",
+                    },
+                  ]}
+                  selected={[formState.matchingCriteria]}
+                  onChange={(matchingCriteria) =>
+                    setFormState({
+                      ...formState,
+                      matchingCriteria: matchingCriteria[0],
+                    })
+                  }
+                  error={errors.matchingCriteria}
+                />
+              </BlockStack>
+            </Card>
+            {/* [END matching-criteria] */}
           </BlockStack>
         </Layout.Section>
         <Layout.Section variant="oneThird">
