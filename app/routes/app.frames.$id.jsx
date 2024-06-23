@@ -296,12 +296,16 @@ export default function FrameForm() {
                   title="Choose how to match products"
                   choices={[
                     {
-                      label: "Use Receipts.xyz running sessions",
+                      label: "Use Receipts.xyz - Running sessions",
                       value: "RECEIPTS_XYZ_ALL_TIME_RUNNING"
                     },
                     {
-                      label: "Use Coinbase Onchain Verifications country of residence",
+                      label: "Use Coinbase Onchain Verifications - Country of residence",
                       value: "COINBASE_ONCHAIN_VERIFICATIONS",
+                    },
+                    {
+                      label: "Use Coinbase Onchain Verifications - One account",
+                      value: "COINBASE_ONCHAIN_VERIFICATIONS_ONE",
                     },
                     {
                       label: "Use all onchain criteria at the same time (Experimental)",
