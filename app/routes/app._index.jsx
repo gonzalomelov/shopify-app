@@ -103,7 +103,11 @@ export async function loader({ request }) {
 
   const products = await getProducts(admin.rest, session);
 
-  await db.product.deleteMany({});
+  await db.product.deleteMany({
+    where: {
+        shop: session.shop
+    }
+  });
 
   const upsertOperations = products.map((product) => {
     const { images, variants } = product;
