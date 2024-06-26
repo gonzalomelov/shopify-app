@@ -321,6 +321,30 @@ export default function FrameForm() {
                   }
                   error={errors.matchingCriteria}
                 />
+                {formState.matchingCriteria === 'RECEIPTS_XYZ_ALL_TIME_RUNNING' ? (
+                  <Text as="p" variant="bodyMd">
+                    By using this matching criteria, products of a specific sport type will be recommended to users who have tracked an activity of the sport type.
+                    For example, if a user tracked a running activity lately, running sportswear will be recommended and shown on the user’s frame.
+                  </Text>
+                ) : null}
+                {formState.matchingCriteria === 'COINBASE_ONCHAIN_VERIFICATIONS_COUNTRY' ? (
+                  <Text as="p" variant="bodyMd">
+                    By using this matching criteria, products marked for a specific country will be recommended to users who have verified their country of residence using Coinbase Onchain Verification.
+                    For example, if a user has verified Canada as his country of residence, Canadian products will be recommended and shown on the user’s frame.
+                  </Text>
+                ) : null}
+                {formState.matchingCriteria === 'COINBASE_ONCHAIN_VERIFICATIONS_ONE' ? (
+                  <Text as="p" variant="bodyMd">
+                    By using this matching criteria, special products marked for Coinbase One members will be recommended to them using Coinbase Onchain Verification.
+                    For example, if a user is a member of Coinbase One, special products will be recommended and shown on the user’s frame.
+                  </Text>
+                ) : null}
+                {formState.matchingCriteria === 'ALL' ? (
+                  <Text as="p" variant="bodyMd">
+                    By using this matching criteria, products will be recommended to users based on their onchain data automatically.
+                    This is an experimental feature and may not work as expected.
+                  </Text>
+                ) : null}
               </BlockStack>
             </Card>
             {/* [END matching-criteria] */}
