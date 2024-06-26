@@ -301,7 +301,7 @@ export default function FrameForm() {
                     },
                     {
                       label: "Use Coinbase Onchain Verifications - Country of residence",
-                      value: "COINBASE_ONCHAIN_VERIFICATIONS",
+                      value: "COINBASE_ONCHAIN_VERIFICATIONS_COUNTRY",
                     },
                     {
                       label: "Use Coinbase Onchain Verifications - One account",
