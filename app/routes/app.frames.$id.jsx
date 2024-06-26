@@ -312,6 +312,10 @@ export default function FrameForm() {
                       value: "COINBASE_ONCHAIN_VERIFICATIONS_ONE",
                     },
                     {
+                      label: "Use user's POAPs owned",
+                      value: "POAPS_OWNED",
+                    },
+                    {
                       label: "Use all onchain criteria at the same time (Experimental)",
                       value: "ALL",
                     },
@@ -347,6 +351,12 @@ export default function FrameForm() {
                   <Text as="p" variant="bodyMd">
                     By using this matching criteria, special products marked for Coinbase One members will be recommended to them using Coinbase Onchain Verification.
                     For example, if a user is a member of Coinbase One, special products will be recommended and shown on the user’s frame.
+                  </Text>
+                ) : null}
+                {formState.matchingCriteria === 'POAPS_OWNED' ? (
+                  <Text as="p" variant="bodyMd">
+                    By using this matching criteria, products marked for a specific POAP will be recommended to users who have verified their POAPs owned.
+                    For example, if a user has verified a specific POAP, products related to the POAP will be recommended and shown on the user’s frame.
                   </Text>
                 ) : null}
                 {formState.matchingCriteria === 'ALL' ? (
