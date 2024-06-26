@@ -47,7 +47,7 @@ model Frame {
 model Product {
   id                    String   @id
   title                 String
-  description           String
+  description           String   @db.Text
   shop                  String
   handle                String
   variantId             String
