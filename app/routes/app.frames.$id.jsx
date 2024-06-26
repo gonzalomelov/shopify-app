@@ -304,6 +304,10 @@ export default function FrameForm() {
                       value: "COINBASE_ONCHAIN_VERIFICATIONS_COUNTRY",
                     },
                     {
+                      label: "Use Coinbase Onchain Verifications - Standard account",
+                      value: "COINBASE_ONCHAIN_VERIFICATIONS_ACCOUNT",
+                    },
+                    {
                       label: "Use Coinbase Onchain Verifications - One account",
                       value: "COINBASE_ONCHAIN_VERIFICATIONS_ONE",
                     },
@@ -331,6 +335,12 @@ export default function FrameForm() {
                   <Text as="p" variant="bodyMd">
                     By using this matching criteria, products marked for a specific country will be recommended to users who have verified their country of residence using Coinbase Onchain Verification.
                     For example, if a user has verified Canada as his country of residence, Canadian products will be recommended and shown on the user’s frame.
+                  </Text>
+                ) : null}
+                {formState.matchingCriteria === 'COINBASE_ONCHAIN_VERIFICATIONS_ACCOUNT' ? (
+                  <Text as="p" variant="bodyMd">
+                    By using this matching criteria, special products marked for Coinbase members will be recommended to them using Coinbase Onchain Verification.
+                    For example, if a user is a member of Coinbase, special products will be recommended and shown on the user’s frame.
                   </Text>
                 ) : null}
                 {formState.matchingCriteria === 'COINBASE_ONCHAIN_VERIFICATIONS_ONE' ? (
