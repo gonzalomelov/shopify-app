@@ -59,6 +59,20 @@ model Product {
 
 // [END product-model]
 
+// [START user-product-model]
+model UserProduct {
+  walletAddress String
+  frameId       Int
+  productId1   String
+  productId2   String?
+  productId3   String?
+
+  @@id([walletAddress, frameId])
+  @@index([walletAddress, frameId])
+}
+
+// [END user-product-model]
+
 enum MatchingCriteria {
   RECEIPTS_XYZ_ALL_TIME_RUNNING
   COINBASE_ONCHAIN_VERIFICATIONS_COUNTRY
