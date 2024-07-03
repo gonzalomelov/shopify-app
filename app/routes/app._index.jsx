@@ -33,6 +33,10 @@ export async function getProducts(rest, session) {
   return products;
 }
 
+function stripHtmlTags(html) {
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
 // [START action]
 export async function action({ request }) {
   const { session } = await authenticate.admin(request);
@@ -121,7 +125,7 @@ export async function loader({ request }) {
     const upsertProduct = {
       id: product.product_id.toString(),
       title: product.title,
-      description: product.body_html ?? '',
+      description: product.body_html ? stripHtmlTags(product.body_html) : '',
       shop: session.shop,
       handle: product.handle,
       variantId,
