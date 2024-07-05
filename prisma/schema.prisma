@@ -22,7 +22,6 @@ model Session {
   userId      BigInt?
   clerkDbJwt  String?   @db.Text
 }
-
 // [END session-model]
 
 // [START frame-model]
@@ -40,7 +39,6 @@ model Frame {
   button           String
   matchingCriteria MatchingCriteria     @default(ALL)
 }
-
 // [END frame-model]
 
 // [START product-model]
@@ -56,22 +54,52 @@ model Product {
   image                 String
   createdAt             DateTime @default(now())
 }
-
 // [END product-model]
 
 // [START user-product-model]
 model UserProduct {
   walletAddress String
   frameId       Int
-  productId1   String
-  productId2   String?
-  productId3   String?
+  productId1    String
+  productId2    String?
+  productId3    String?
 
   @@id([walletAddress, frameId])
   @@index([walletAddress, frameId])
 }
-
 // [END user-product-model]
+
+// [START group-profile-model]
+model GroupProfile {
+  profileText String   @id @db.VarChar(100)
+  createdAt   DateTime @default(now())
+}
+// [END group-profile-model]
+
+// [START group-wallet-model]
+model GroupWallet {
+  profileText   String
+  walletAddress String
+  createdAt     DateTime @default(now())
+
+  @@id([profileText, walletAddress])
+  @@index([profileText, walletAddress])
+}
+// [END group-wallet-model]
+
+// [START group-recommendation-model]
+model GroupRecommendation {
+  frameId      Int
+  profileText  String
+  productId    String
+  productTitle String
+  message      String   @db.Text
+  createdAt    DateTime @default(now())
+
+  @@id([frameId, profileText, productId])
+  @@index([frameId, profileText, productId])
+}
+// [END group-recommendation-model]
 
 enum MatchingCriteria {
   RECEIPTS_XYZ_ALL_TIME_RUNNING
