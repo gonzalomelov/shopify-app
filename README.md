@@ -1,4 +1,4 @@
-# Shopify app using Remix
+# Target Onchain
 
 This is a Shopify app for managing Frames.
 
