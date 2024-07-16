@@ -21,6 +21,7 @@ model Session {
   accessToken String
   userId      BigInt?
   clerkDbJwt  String?   @db.Text
+  storefrontAccessToken String?
 }
 // [END session-model]
 

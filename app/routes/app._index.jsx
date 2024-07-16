@@ -39,7 +39,7 @@ function stripHtmlTags(html) {
 
 // [START action]
 export async function action({ request }) {
-  const { session } = await authenticate.admin(request);
+  const { admin, session } = await authenticate.admin(request);
   const { shop } = session;
 
   /** @type {any} */
@@ -48,9 +48,38 @@ export async function action({ request }) {
     shop,
   };
   
+  let clerkDbJwt = null, storefrontAccessToken = null;
+  
+  if (data.action === "connect") {
+    clerkDbJwt = data.clerkDbJwt;
+
+    const response = await admin.rest.resources.StorefrontAccessToken.all({
+      // @ts-ignore
+      session,
+    });
+  
+    const storefrontAccessTokens = [...response.data.map(n => n.access_token)];
+
+    if (storefrontAccessTokens.length === 0) {
+      const newStorefrontAccessToken = new admin.rest.resources.StorefrontAccessToken({
+        // @ts-ignore
+        session,
+      });
+
+      newStorefrontAccessToken.title = "New Storefront Access Token";
+      await newStorefrontAccessToken.save({
+        update: true,
+      });
+  
+      storefrontAccessToken = newStorefrontAccessToken.access_token;
+    } else {
+      storefrontAccessToken = storefrontAccessTokens[0];
+    }
+  }
+  
   await db.session.update({
     where: { id: session.id },
-    data: { clerkDbJwt: data.action === "connect" ? data.clerkDbJwt : null }
+    data: { clerkDbJwt, storefrontAccessToken }
   });
   
   return json({});
