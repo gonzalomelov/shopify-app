@@ -85,8 +85,7 @@ const FrameTableRow = ({ frame }) => (
   <IndexTable.Row id={frame.id} position={frame.id}>
     <IndexTable.Cell>
       <Thumbnail
-        // source={frame.productImage || ImageIcon}
-        source={ImageIcon}
+        source={frame.image || ImageIcon}
         alt={frame.productTitle}
         size="small"
       />
