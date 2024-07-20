@@ -128,7 +128,6 @@ export default function FrameForm() {
         productId: id,
         productVariantId: variants[0].id,
         productTitle: title,
-        productHandle: handle,
         productAlt: images[0]?.altText,
         productImage: images[0]?.originalSrc,
         totalProducts: products.length,
@@ -146,7 +145,6 @@ export default function FrameForm() {
       button: formState.button,
       productId: formState.productId || "",
       productVariantId: formState.productVariantId || "",
-      productHandle: formState.productHandle || "",
       destination: formState.destination,
       matchingCriteria: formState.matchingCriteria,
     };

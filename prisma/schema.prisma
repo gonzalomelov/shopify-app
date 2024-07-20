@@ -31,7 +31,6 @@ model Frame {
   title            String
   shop             String
   productId        String
-  productHandle    String
   productVariantId String
   destination      String
   createdAt        DateTime @default(now())
