@@ -44,16 +44,6 @@ export function getFrameImage(id, imageUrl) {
 }
 // [END get-frame-image]
 
-// [START get-destination]
-export function getDestinationUrl(frame) {
-  if (frame.destination === "product") {
-    return `https://${frame.shop}/products/${frame.productHandle}`;
-  }
-
-  return `https://${frame.shop}/cart/${frame.productVariantId}:1`;
-}
-// [END get-destination]
-
 // [START hydrate-frame]
 async function supplementFrame(frame, graphql) {
   // const frameImagePromise = getFrameImage(frame.id, frame.image);
@@ -89,7 +79,6 @@ async function supplementFrame(frame, graphql) {
     // productTitle: product?.title,
     // productImage: product?.images?.nodes[0]?.url,
     // productAlt: product?.images?.nodes[0]?.altText,
-    destinationUrl: getDestinationUrl(frame),
     // image: await frameImagePromise,
   };
 }
