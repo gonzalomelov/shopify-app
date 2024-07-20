@@ -70,7 +70,6 @@ const FrameTable = ({ frames }) => (
       { title: "Title" },
       // { title: "Product" },
       { title: "Date created" },
-      // { title: "Scans" },
     ]}
     selectable={false}
   >
@@ -114,7 +113,6 @@ const FrameTableRow = ({ frame }) => (
     <IndexTable.Cell>
       {new Date(frame.createdAt).toDateString()}
     </IndexTable.Cell>
-    {/* <IndexTable.Cell>{frame.scans}</IndexTable.Cell> */}
   </IndexTable.Row>
 );
 // [END row]

@@ -231,9 +231,7 @@ export default function FrameForm() {
                       Selected products:
                     </Text>
                     <Text as="span" variant="headingMd" fontWeight="semibold">
-                      {/* {formState.totalProducts} */}
-                      {/* FIXME: This is a temporary fix */}
-                      {formState.totalProducts ?? formState.scans}
+                      {formState.totalProducts ?? 0}
                     </Text>
                   </InlineStack>
                 ) : (
@@ -250,41 +248,7 @@ export default function FrameForm() {
                   </BlockStack>
                 )}
                 {/* [END products] */}
-                {/* <Bleed marginInlineStart="200" marginInlineEnd="200">
-                  <Divider />
-                </Bleed> */}
-                {/* [START destination] */}
-                {/* <InlineStack gap="500" align="space-between" blockAlign="start">
-                  <ChoiceList
-                    title="Scan destination"
-                    choices={[
-                      { label: "Link to product page", value: "product" },
-                      {
-                        label: "Link to checkout page with product in the cart",
-                        value: "cart",
-                      },
-                    ]}
-                    selected={[formState.destination]}
-                    onChange={(destination) =>
-                      setFormState({
-                        ...formState,
-                        destination: destination[0],
-                      })
-                    }
-                    error={errors.destination}
-                  />
-                  {frame.destinationUrl ? (
-                    <Button
-                      variant="plain"
-                      url={frame.destinationUrl}
-                      target="_blank"
-                    >
-                      Go to destination URL
-                    </Button>
-                  ) : null}
-                </InlineStack> */}
               </BlockStack>
-              {/* [END destination] */}
             </Card>
             {/* [START matching-criteria] */}
             <Card>

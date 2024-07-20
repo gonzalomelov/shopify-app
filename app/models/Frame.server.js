@@ -34,8 +34,6 @@ export async function getFrames(shop, graphql) {
 
 // [START get-frame-image]
 export function getFrameImage(id, imageUrl) {
-  const url = new URL(`/frames/${id}/scan`, process.env.SHOPIFY_APP_URL);
-
   /** @type {ImageToDataURLOptions} */
   const opts = {
     width: 300,
