@@ -127,7 +127,7 @@ export default function FrameForm() {
         ...formState,
         productId: id,
         productTitle: title,
-        totalProducts: products.length,
+        products,
       });
     }
   }
@@ -221,7 +221,7 @@ export default function FrameForm() {
                       Selected products:
                     </Text>
                     <Text as="span" variant="headingMd" fontWeight="semibold">
-                      {formState.totalProducts ?? 0}
+                      {formState.products.length}
                     </Text>
                   </InlineStack>
                 ) : (

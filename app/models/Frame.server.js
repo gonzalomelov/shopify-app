@@ -73,11 +73,17 @@ async function supplementFrame(frame, graphql) {
   //   data: { product },
   // } = await response.json();
 
+  const frameProducts = await db.product.findMany({
+    where: { shop: frame.shop },
+    orderBy: { id: "desc" },
+  });
+
   return {
     ...frame,
+    // image: await frameImagePromise,
     // productDeleted: !product?.title,
     // productTitle: product?.title,
-    // image: await frameImagePromise,
+    products: frameProducts,
   };
 }
 // [END hydrate-frame]
