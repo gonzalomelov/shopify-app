@@ -127,8 +127,6 @@ export default function FrameForm() {
         ...formState,
         productId: id,
         productTitle: title,
-        productAlt: images[0]?.altText,
-        productImage: images[0]?.originalSrc,
         totalProducts: products.length,
       });
     }
@@ -216,11 +214,7 @@ export default function FrameForm() {
                 </InlineStack>
                 {formState.productId ? (
                   <InlineStack blockAlign="center" gap="100">
-                    {/* <Thumbnail
-                      source={formState.productImage || ImageIcon}
-                      alt={formState.productAlt}
-                    />
-                    <Text as="span" variant="headingMd" fontWeight="semibold">
+                    {/* <Text as="span" variant="headingMd" fontWeight="semibold">
                       {formState.productTitle}
                     </Text> */}
                     <Text as="span">

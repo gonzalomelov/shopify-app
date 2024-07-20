@@ -77,8 +77,6 @@ async function supplementFrame(frame, graphql) {
     ...frame,
     // productDeleted: !product?.title,
     // productTitle: product?.title,
-    // productImage: product?.images?.nodes[0]?.url,
-    // productAlt: product?.images?.nodes[0]?.altText,
     // image: await frameImagePromise,
   };
 }
