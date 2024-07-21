@@ -73,10 +73,6 @@ export function validateFrame(data) {
     errors.products = "Products are required";
   }
 
-  if (!data.destination) {
-    errors.destination = "Destination is required";
-  }
-
   if (Object.keys(errors).length) {
     return errors;
   }

@@ -45,7 +45,6 @@ export async function loader({ request, params }) {
   if (params.id === "new") {
     return json({
       frame: {
-        destination: "product",
         title: "",
         image: "",
         button: "",
@@ -140,7 +139,6 @@ export default function FrameForm() {
       image: formState.image,
       button: formState.button,
       products: formState.products,
-      destination: formState.destination,
       matchingCriteria: formState.matchingCriteria,
     };
 
