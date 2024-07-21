@@ -48,31 +48,6 @@ export function getFrameImage(id, imageUrl) {
 async function supplementFrame(frame, graphql) {
   // const frameImagePromise = getFrameImage(frame.id, frame.image);
 
-  // const response = await graphql(
-  //   `
-  //     query supplementFrame($id: ID!) {
-  //       product(id: $id) {
-  //         title
-  //         images(first: 1) {
-  //           nodes {
-  //             altText
-  //             url
-  //           }
-  //         }
-  //       }
-  //     }
-  //   `,
-  //   {
-  //     variables: {
-  //       id: frame.productId,
-  //     },
-  //   }
-  // );
-
-  // const {
-  //   data: { product },
-  // } = await response.json();
-
   const frameProducts = await db.product.findMany({
     where: { shop: frame.shop },
     orderBy: { id: "desc" },
@@ -81,8 +56,6 @@ async function supplementFrame(frame, graphql) {
   return {
     ...frame,
     // image: await frameImagePromise,
-    // productDeleted: !product?.title,
-    // productTitle: product?.title,
     products: frameProducts,
   };
 }
@@ -96,8 +69,8 @@ export function validateFrame(data) {
     errors.title = "Title is required";
   }
 
-  if (!data.productId) {
-    errors.productId = "Product is required";
+  if (!data.products || data.products.length === 0) {
+    errors.products = "Products are required";
   }
 
   if (!data.destination) {

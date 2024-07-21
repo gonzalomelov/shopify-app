@@ -86,29 +86,13 @@ const FrameTableRow = ({ frame }) => (
     <IndexTable.Cell>
       <Thumbnail
         source={frame.image || ImageIcon}
-        alt={frame.productTitle}
+        alt={frame.title}
         size="small"
       />
     </IndexTable.Cell>
     <IndexTable.Cell>
       <Link to={`/app/frames/${frame.id}`}>{truncate(frame.title)}</Link>
     </IndexTable.Cell>
-    {/* [START deleted] */}
-    {/* <IndexTable.Cell>
-      {frame.productDeleted ? (
-        <InlineStack align="start" gap="200">
-          <span style={{ width: "20px" }}>
-            <Icon source={AlertDiamondIcon} tone="critical" />
-          </span>
-          <Text tone="critical" as="span">
-            product has been deleted
-          </Text>
-        </InlineStack>
-      ) : (
-        truncate(frame.productTitle)
-      )}
-    </IndexTable.Cell> */}
-    {/* [END deleted] */}
     <IndexTable.Cell>
       {new Date(frame.createdAt).toDateString()}
     </IndexTable.Cell>

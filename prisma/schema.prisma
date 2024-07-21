@@ -30,7 +30,6 @@ model Frame {
   id               Int      @id @default(autoincrement())
   title            String
   shop             String
-  productId        String
   destination      String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @default(now())

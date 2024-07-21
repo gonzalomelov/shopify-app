@@ -49,6 +49,7 @@ export async function loader({ request, params }) {
         title: "",
         image: "",
         button: "",
+        products: [],
         matchingCriteria: "ALL",
       },
       env
@@ -84,10 +85,12 @@ export async function action({ request, params }) {
     return json({ errors }, { status: 422 });
   }
 
+  const { products: productsData, ...frameData } = data;
+
   const frame =
     params.id === "new"
-      ? await db.frame.create({ data })
-      : await db.frame.update({ where: { id: Number(params.id) }, data });
+      ? await db.frame.create({ data: frameData })
+      : await db.frame.update({ where: { id: Number(params.id) }, data: frameData });
 
   return redirect(`/app/frames/${frame.id}`);
 }
@@ -121,12 +124,8 @@ export default function FrameForm() {
     });
 
     if (products) {
-      const { images, id, variants, title, handle } = products[0];
-
       setFormState({
         ...formState,
-        productId: id,
-        productTitle: title,
         products,
       });
     }
@@ -140,7 +139,7 @@ export default function FrameForm() {
       title: formState.title,
       image: formState.image,
       button: formState.button,
-      productId: formState.productId || "",
+      products: formState.products,
       destination: formState.destination,
       matchingCriteria: formState.matchingCriteria,
     };
@@ -206,17 +205,14 @@ export default function FrameForm() {
                   <Text as={"h2"} variant="headingLg">
                     Products
                   </Text>
-                  {formState.productId ? (
+                  {formState.products.length > 0 ? (
                     <Button variant="plain" onClick={selectProducts}>
                       Change products
                     </Button>
                   ) : null}
                 </InlineStack>
-                {formState.productId ? (
+                {formState.products.length > 0 ? (
                   <InlineStack blockAlign="center" gap="100">
-                    {/* <Text as="span" variant="headingMd" fontWeight="semibold">
-                      {formState.productTitle}
-                    </Text> */}
                     <Text as="span">
                       Selected products:
                     </Text>
@@ -229,9 +225,9 @@ export default function FrameForm() {
                     <Button onClick={selectProducts} id="select-products">
                       Select products
                     </Button>
-                    {errors.productId ? (
+                    {errors.products ? (
                       <InlineError
-                        message={errors.productId}
+                        message={errors.products}
                         fieldID="myFieldID"
                       />
                     ) : null}
