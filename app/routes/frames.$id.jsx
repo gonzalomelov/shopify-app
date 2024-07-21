@@ -7,12 +7,12 @@ import { getFrameImage } from "../models/Frame.server";
 
 // [START loader]
 export const loader = async ({ params }) => {
-  invariant(params.id, "Could not find Frame destination");
+  invariant(params.id, "Could not find Frame id");
 
   const id = Number(params.id);
   const frame = await db.frame.findFirst({ where: { id } });
 
-  invariant(frame, "Could not find Frame destination");
+  invariant(frame, "Could not find Frame");
 
   return json({
     title: frame.title,
