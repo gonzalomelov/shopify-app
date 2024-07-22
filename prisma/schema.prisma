@@ -32,7 +32,7 @@ model Frame {
   shop             String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @default(now())
-  image            String
+  image            String @db.VarChar(512)
   button           String
   matchingCriteria MatchingCriteria     @default(ALL)
 }
